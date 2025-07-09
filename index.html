@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>رزومه امیررضا حسن نژاد فرد - طرح Bento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background-color: #111;
+      color: #fff;
+      direction: rtl;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px; /* Increased max-width for Bento layout */
+      margin: 2rem auto;
+      padding: 1.5rem;
+      display: grid;
+      /* Define grid template for larger screens */
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Flexible columns */
+      gap: 1.5rem;
+      grid-auto-rows: minmax(min-content, max-content); /* Rows adjust to content */
+    }
+    .card {
+      background-color: #1e1e1e;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      display: flex; /* Use flex for internal content alignment */
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    h1, h2, h3 {
+      color: #00d0ff;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+    }
+    h2 {
+      font-size: 1.8rem;
+    }
+    h3 {
+      font-size: 1.3rem;
+      color: #ccc;
+    }
+
+    .section {
+      margin-bottom: 1rem;
+    }
+    .skills-bar {
+      background-color: #333;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 4px;
+      margin-bottom: 1rem;
+    }
+    .bar {
+      height: 10px;
+      background-color: #00d0ff;
+    }
+    .info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-bottom: 0.5rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    ul li {
+      margin-bottom: 0.5rem;
+      padding-right: 1.5rem; /* For bullet points if needed, or adjust for custom */
+      position: relative;
+    }
+    ul li:before {
+      content: "•"; /* Custom bullet point */
+      color: #00d0ff;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .tags span {
+      background: #222;
+      color: #00d0ff;
+      padding: 0.3rem 0.6rem;
+      border-radius: 10px;
+      margin-left: 0.5rem;
+      font-size: 0.8rem;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    /* --- Bento Layout Specific Styles --- */
+
+    /* Header/Main Info Card */
+    .header-card {
+      grid-column: span 2; /* Occupies 2 columns on larger screens */
+      display: flex;
+      flex-direction: row; /* Image and text side-by-side */
+      gap: 1.5rem;
+      align-items: flex-start; /* Align content to the top */
+      min-height: 250px; /* Minimum height for this card, adjust as needed */
+    }
+    .profile-image {
+      flex-shrink: 0; /* Prevents image from shrinking */
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #00d0ff;
+    }
+    .header-content {
+      flex-grow: 1;
+      text-align: right; /* Align name and title to right */
+    }
+    .header-content h1 {
+      margin-bottom: 0.2rem;
+      font-size: 2.5rem; /* Larger font for name */
+    }
+    .header-content .job-title {
+      color: #ccc;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .header-content .about-me-text {
+      font-size: 0.95rem;
+      color: #ddd;
+      margin-bottom: 1rem; /* Added margin for spacing */
+    }
+    .personal-details {
+        display: flex;
+        justify-content: space-between;
+        margin-top: auto; /* Pushes to bottom of header-content */
+        font-size: 0.9rem;
+        color: #aaa;
+        width: 100%; /* Ensure it spans the full width of its container */
+    }
+
+    /* Smaller Cards */
+    .small-card {
+        grid-column: span 1; /* Occupies 1 column */
+    }
+
+    /* Media Queries for Responsiveness */
+    /* Tablet and larger phones */
+    @media (max-width: 992px) {
+      .container {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust columns for tablets */
+        padding: 1rem;
+      }
+      .header-card {
+        grid-column: span 1; /* On smaller screens, header card might take 1 column */
+        flex-direction: column; /* Stack image and text */
+        align-items: center; /* Center them when stacked */
+        text-align: center; /* Center content when stacked */
+        min-height: auto; /* Remove fixed min-height for responsiveness */
+      }
+      .header-content {
+        text-align: center; /* Center name and title */
+        margin-top: 1rem; /* Space between image and text */
+      }
+      .header-content .about-me-text {
+        text-align: justify; /* Keep about me text justified */
+      }
+      .personal-details {
+          flex-direction: column; /* Stack date and location */
+          align-items: center;   /* Center them */
+          gap: 0.5rem;
+          margin-top: 1rem; /* Add some space from about me text */
+      }
+    }
+
+    /* Mobile phones */
+    @media (max-width: 600px) {
+      .container {
+        grid-template-columns: 1fr; /* Single column for mobile */
+        padding: 0.8rem; /* Slightly less padding on very small screens */
+      }
+      .card {
+        padding: 1rem; /* Slightly less padding inside cards */
+      }
+      .header-card {
+        grid-column: auto; /* Reset grid column span for full width */
+        flex-direction: column; /* Ensure stacked */
+        align-items: center;
+        text-align: center;
+      }
+      .profile-image {
+        width: 120px; /* Slightly smaller image on mobile */
+        height: 120px;
+      }
+      .header-content h1 {
+        font-size: 2rem; /* Slightly smaller font for name */
+      }
+      .header-content .job-title {
+        font-size: 1rem; /* Slightly smaller font for job title */
+      }
+      .header-content .about-me-text {
+        font-size: 0.9rem; /* Slightly smaller font for about me */
+        text-align: justify; /* Keep about me text justified */
+      }
+      .personal-details {
+          flex-direction: column;
+          align-items: center;
+          gap: 0.3rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="card header-card">
+      <img src="picprof.jpg" alt="عکس پروفایل امیررضا" class="profile-image">
+      <div class="header-content">
+        <h1>امیررضا حسن نژاد فرد</h1>
+        <p class="job-title">متخصص امنیت سایبری و برنامه نویس</p>
+        <p class="about-me-text">
+          من یک متخصص امنیت سایبری هستم با بیش از ۳ سال تجربه عملی در حوزه‌های مختلف امنیت اطلاعات، از جمله حفاظت از حساب‌های کاربری در شبکه‌های اجتماعی، تست نفوذ وب‌اپلیکیشن‌ها (Bug Bounty)، و تأمین امنیت شبکه‌های سازمانی.
+          در طول مسیر حرفه‌ای خود، به‌عنوان فریلنسر با برندها و شرکت‌های بین‌المللی همکاری کرده‌ام و خدمات مشاوره امنیتی ارائه داده‌ام. تمرکز من بر ارائه راهکارهای مؤثر، خلاقانه و قابل‌اطمینان برای حفظ هویت دیجیتال و زیرساخت‌های آنلاین است.
+          از جمله دستاوردهای من می‌توان به ثبت و گزارش آسیب‌پذیری‌ها در پلتفرم معتبر HackerOne اشاره کرد. به سیستم‌عامل لینوکس (در سطح LPIC-2) کاملاً مسلط هستم و تجربه‌ی گسترده‌ای در برنامه‌نویسی با Bash و Python دارم. همچنین، در شناسایی و رفع آسیب‌پذیری‌های امنیتی مبتنی بر استانداردهای OWASP تخصص دارم و به یادگیری مستمر در حوزه امنیت اطلاعات متعهدم.
+        </p>
+        <div class="personal-details">
+            <span>متولد: ۱۳۸۷/۶/۱۷</span>
+            <span>خراسان رضوی، مشهد</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card small-card">
+      <h2>خدمات قابل ارائه</h2>
+      <ul>
+        <li>تست نفوذ و ارزیابی امنیتی</li>
+        <li>مشاوره امنیت سایبری</li>
+        <li>مستندسازی امنیتی</li>
+        <li>طراحی ربات تلگرام با پایتون</li>
+        <li>خدمات امنیتی برای سایت‌های وردپرس</li>
+        <li>طراحی سایت با وردپرس</li>
+      </ul>
+    </div>
+
+    <div class="card small-card">
+      <h2>مهارت‌ها</h2>
+      <div class="section">
+        <p>امنیت وب سایت</p>
+        <div class="skills-bar"><div class="bar" style="width: 80%"></div></div>
+        <p>برنامه نویسی پایتون</p>
+        <div class="skills-bar"><div class="bar" style="width: 80%"></div></div>
+        <p>امنیت سرور و شبکه‌های لینوکسی</p>
+        <div class="skills-bar"><div class="bar" style="width: 70%"></div></div>
+        <p>تست نفوذ و تحلیل امنیتی</p>
+        <div class="skills-bar"><div class="bar" style="width: 75%"></div></div>
+        <p>سیستم عامل لینوکس</p>
+        <div class="skills-bar"><div class="bar" style="width: 70%"></div></div>
+        <p>امنیت شبکه و زیر ساخت</p>
+        <div class="skills-bar"><div class="bar" style="width: 85%"></div></div>
+        <p>رمزنگاری و امنیت ارتباطات</p>
+        <div class="skills-bar"><div class="bar" style="width: 75%"></div></div>
+        <p>طراحی سایت با وردپرس</p>
+        <div class="skills-bar"><div class="bar" style="width: 80%"></div></div>
+      </div>
+    </div>
+
+    <div class="card small-card">
+      <h2>سوابق شغلی</h2>
+      <h3>مشاور امنیتی - شرکت تیوان سپهر</h3>
+      <div class="info">
+        <span>شهریور ۱۴۰۳ - اکنون</span>
+        <span>مشهد</span>
+      </div>
+      <ul>
+        <li>توسعه و اجرای دستورالعمل‌های امنیتی و سیاست‌های محافظتی در سازمان</li>
+        <li>راه‌اندازی و مدیریت سیستم‌های تشخیص نفوذ (IDS) و پیشگیری از نفوذ (IPS)</li>
+        <li>تحلیل حملات سایبری و تهدیدات شبکه</li>
+      </ul>
+
+      <h3>تحلیلگر امنیت - شرکت Suma Collection</h3>
+      <div class="info">
+        <span>فروردین ۱۴۰۴ - اردیبهشت ۱۴۰۴</span>
+        <span>دورکاری</span>
+      </div>
+      <ul>
+        <li>تست نفوذ و تحلیل نقاط ضعف سایت</li>
+        <li>برطرف‌سازی آسیب‌پذیری‌های شناسایی‌شده</li>
+      </ul>
+    </div>
+
+    <div class="card small-card">
+      <h2>دوره‌ها و گواهینامه‌ها</h2>
+      <ul>
+        <li>گواهینامه برنامه نویسی پایتون - فنی حرفه‌ای</li>
+        <li>Network Plus - فنی حرفه‌ای</li>
+        <li>Linux Essentials - فنی حرفه‌ای</li>
+        <li>تست نفوذ CEH - فنی حرفه‌ای</li>
+        <li>گواهینامه OWASP - موسسه OWASP Foundation</li>
+      </ul>
+    </div>
+
+    <div class="card small-card">
+      <h2>زبان‌ها</h2>
+      <div class="section">
+        <p><img src="https://flagcdn.com/w40/ir.png" width="20" alt="پرچم ایران"> فارسی</p>
+        <p><img src="https://flagcdn.com/w40/gb.png" width="20" alt="پرچم بریتانیا"> انگلیسی</p>
+        <div class="skills-bar"><div class="bar" style="width: 70%"></div></div>
+      </div>
+    </div>
+
+    <div class="card small-card">
+      <h2>تماس با من</h2>
+      <p>📧 amirrezahasnanezhad47@gmail.com</p>
+      <p>📞 09389150746</p>
+      <p>📷 اینستاگرام: @edvinsecuriti</p>
+    </div>
+  </div>
+</body>
+</html>
