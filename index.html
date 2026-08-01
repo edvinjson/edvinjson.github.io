@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" id="html-root">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>رزومه امیررضا حسن نژاد فرد - طرح Bento</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -14,6 +15,9 @@
       color: #fff;
       direction: rtl;
       line-height: 1.6;
+    }
+    body.lang-en {
+      font-family: 'Inter', sans-serif;
     }
     .container {
       max-width: 1200px; /* Increased max-width for Bento layout */
@@ -53,6 +57,11 @@
     .section {
       margin-bottom: 1rem;
     }
+    .card hr {
+      border: none;
+      border-top: 1px solid rgba(0, 208, 255, 0.25);
+      margin: 1rem 0;
+    }
     .skills-bar {
       background-color: #333;
       border-radius: 8px;
@@ -88,6 +97,14 @@
       right: 0;
       top: 0;
     }
+    body.lang-en ul li {
+      padding-right: 0;
+      padding-left: 1.5rem;
+    }
+    body.lang-en ul li:before {
+      right: auto;
+      left: 0;
+    }
     .tags span {
       background: #222;
       color: #00d0ff;
@@ -122,6 +139,9 @@
       flex-grow: 1;
       text-align: right; /* Align name and title to right */
     }
+    body.lang-en .header-content {
+      text-align: left;
+    }
     .header-content h1 {
       margin-bottom: 0.2rem;
       font-size: 2.5rem; /* Larger font for name */
@@ -148,6 +168,260 @@
     /* Smaller Cards */
     .small-card {
         grid-column: span 1; /* Occupies 1 column */
+    }
+
+    /* --- Portfolio / Projects Section --- */
+    .portfolio-card {
+      grid-column: 1 / -1; /* Full width row */
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 0.5rem;
+    }
+    .project-item {
+      background-color: #262626;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .project-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0, 208, 255, 0.15);
+    }
+    .project-image {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      display: block;
+      background-color: #333; /* shows while image loads / as placeholder */
+    }
+
+    /* --- Mini image gallery inside each project card --- */
+    .project-gallery {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background-color: #333;
+    }
+    .gallery-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .gallery-img.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .gallery-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.5);
+      color: #00d0ff;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      line-height: 1;
+      transition: background-color 0.2s ease;
+    }
+    .gallery-arrow:hover {
+      background: rgba(0, 208, 255, 0.85);
+      color: #111;
+    }
+    .gallery-prev { left: 8px; }
+    .gallery-next { right: 8px; }
+    .gallery-dots {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      gap: 6px;
+    }
+    .gallery-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .gallery-dot.active {
+      background: #00d0ff;
+      transform: scale(1.2);
+    }
+    .project-body {
+      padding: 1rem 1.1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .project-body h3 {
+      margin-bottom: 0.4rem;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+    .project-desc {
+      font-size: 0.88rem;
+      color: #bbb;
+      margin: 0 0 0.8rem 0;
+      flex-grow: 1;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.9rem;
+    }
+    .project-tags span {
+      background: #1e1e1e;
+      color: #00d0ff;
+      padding: 0.25rem 0.55rem;
+      border-radius: 8px;
+      font-size: 0.72rem;
+    }
+    .project-link {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #00d0ff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      border: 1px solid #00d0ff;
+      padding: 0.4rem 0.9rem;
+      border-radius: 8px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .project-link:hover {
+      background-color: #00d0ff;
+      color: #111;
+    }
+
+    /* --- Language Selector Overlay --- */
+    #lang-overlay {
+      position: fixed;
+      inset: 0;
+      background: #111;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.35s ease;
+    }
+    #lang-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .lang-box {
+      text-align: center;
+      padding: 2rem;
+    }
+    .lang-box h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      font-family: 'Vazirmatn', 'Inter', sans-serif;
+    }
+    .lang-choices {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .lang-btn {
+      background-color: #1e1e1e;
+      border: 2px solid #00d0ff;
+      color: #fff;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.05rem;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .lang-btn:hover {
+      background-color: #00d0ff;
+      color: #111;
+      transform: translateY(-2px);
+    }
+    .lang-btn img {
+      width: 24px;
+      border-radius: 3px;
+    }
+
+    /* Hide content until a language is chosen, to avoid a flash */
+    #site-content {
+      display: none;
+    }
+    #site-content.visible {
+      display: block;
+    }
+    .lang-fa[data-hide], .lang-en[data-hide] {
+      display: none !important;
+    }
+
+    /* Floating switch-language button */
+    #lang-switch {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 500;
+      background-color: #1e1e1e;
+      border: 2px solid #00d0ff;
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: 'Vazirmatn', 'Inter', sans-serif;
+      font-size: 0.9rem;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    #lang-switch.visible {
+      display: flex;
+    }
+    #lang-switch:hover {
+      background-color: #00d0ff;
+      color: #111;
+      transform: translateY(-2px);
+    }
+    #lang-switch img {
+      width: 18px;
+      border-radius: 2px;
+    }
+    @media (max-width: 600px) {
+      #lang-switch {
+        bottom: 1rem;
+        left: 1rem;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+      }
     }
 
     /* Media Queries for Responsiveness */
@@ -213,153 +487,602 @@
           align-items: center;
           gap: 0.3rem;
       }
+      .lang-choices {
+        flex-direction: column;
+      }
     }
 
   </style>
 </head>
 <body>
-  <div class="container">
 
-    <div class="card header-card">
-      <img src="picprof.jpg" alt="عکس پروفایل امیررضا" class="profile-image">
-      <div class="header-content">
-        <h1>امیررضا حسن نژاد فرد</h1>
-        <p class="job-title">متخصص امنیت سایبری و برنامه نویس</p>
-        <p class="about-me-text">
-          من یک متخصص امنیت سایبری هستم با بیش از ۳ سال تجربه عملی در حوزه‌های مختلف امنیت اطلاعات، از جمله حفاظت از حساب‌های کاربری در شبکه‌های اجتماعی، تست نفوذ وب‌اپلیکیشن‌ها (Bug Bounty)، و تأمین امنیت شبکه‌های سازمانی.
-          در طول مسیر حرفه‌ای خود، به‌عنوان فریلنسر با برندها و شرکت‌های بین‌المللی همکاری کرده‌ام و خدمات مشاوره امنیتی ارائه داده‌ام. تمرکز من بر ارائه راهکارهای مؤثر، خلاقانه و قابل‌اطمینان برای حفظ هویت دیجیتال و زیرساخت‌های آنلاین است.
-          از جمله دستاوردهای من می‌توان به ثبت و گزارش آسیب‌پذیری‌ها در پلتفرم معتبر HackerOne اشاره کرد. به سیستم‌عامل لینوکس (در سطح LPIC-2) کاملاً مسلط هستم و تجربه‌ی گسترده‌ای در برنامه‌نویسی با Bash و Python دارم. همچنین، در شناسایی و رفع آسیب‌پذیری‌های امنیتی مبتنی بر استانداردهای OWASP تخصص دارم و به یادگیری مستمر در حوزه امنیت اطلاعات متعهدم.
-        </p>
-        <div class="personal-details">
-            <span>متولد: ۱۳۸۷/۶/۱۷</span>
-            <span>خراسان رضوی، مشهد</span>
+  <!-- Language selector, shown first -->
+  <div id="lang-overlay">
+    <div class="lang-box">
+      <h2>زبان خود را انتخاب کنید / Choose your language</h2>
+      <div class="lang-choices">
+        <button class="lang-btn" onclick="selectLang('fa')">
+          <img src="https://flagcdn.com/w40/ir.png" alt="فارسی"> فارسی
+        </button>
+        <button class="lang-btn" onclick="selectLang('en')">
+          <img src="https://flagcdn.com/w40/gb.png" alt="English"> English
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating button to switch language after the initial choice -->
+  <button id="lang-switch" onclick="openLangOverlay()">
+    <img id="lang-switch-flag" src="https://flagcdn.com/w40/gb.png" alt="">
+    <span id="lang-switch-label">English</span>
+  </button>
+
+  <div id="site-content">
+
+    <!-- ===================== PERSIAN VERSION ===================== -->
+    <div class="container lang-fa" id="content-fa">
+
+      <div class="card header-card">
+        <img src="picprof.jpg" alt="عکس پروفایل امیررضا" class="profile-image">
+        <div class="header-content">
+          <h1>امیررضا حسن نژاد فرد</h1>
+          <p class="job-title">متخصص امنیت سایبری و برنامه نویس</p>
+          <p class="about-me-text">
+            من متخصصی با بیش از ۳ سال تجربه عملی در دو حوزه تخصصی امنیت اطلاعات و طراحی/توسعه وب هستم. در حوزه امنیت سایبری، فعالیت‌هایم شامل حفاظت از حساب‌های کاربری در شبکه‌های اجتماعی، تست نفوذ وب‌اپلیکیشن‌ها (Bug Bounty) و تأمین امنیت شبکه‌های سازمانی می‌شود؛ در این مسیر موفق به کشف و گزارش آسیب‌پذیری‌های متعدد در پلتفرم معتبر HackerOne شده‌ام و در شناسایی و رفع نقاط ضعف امنیتی مبتنی بر استانداردهای OWASP تخصص دارم.
+            در کنار این تخصص، مهارت گسترده‌ای در طراحی و پیاده‌سازی وب‌سایت با استفاده از سیستم‌های مدیریت محتوا (CMS) و به‌ویژه وردپرس دارم و توانسته‌ام پروژه‌های متعددی را از صفر تا اجرا، برای کسب‌وکارها و برندهای مختلف طراحی و راه‌اندازی کنم. ترکیب این دو مهارت، یعنی طراحی و در عین حال ایمن‌سازی وب‌سایت‌ها، من را به گزینه‌ای منحصربه‌فرد برای پروژه‌هایی تبدیل کرده که هم به ظاهر و عملکرد حرفه‌ای نیاز دارند و هم به امنیت واقعی در برابر تهدیدات آنلاین.
+            به‌عنوان فریلنسر با برندها و شرکت‌های بین‌المللی همکاری کرده و خدمات مشاوره امنیتی و طراحی وب ارائه داده‌ام. مدرک LPIC-2 دارم و از Bash و Python برای اتوماسیون فرآیندهای امنیتی و تست نفوذ استفاده می‌کنم. علاوه بر ارائه خدمات فنی، در زمینه مشاوره امنیتی برای کسب‌وکارهای کوچک و متوسط نیز فعال بوده‌ام.
+          </p>
+          <div class="personal-details">
+              <span>متولد: ۱۳۸۷/۶/۱۷</span>
+              <span>خراسان رضوی، مشهد</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card small-card">
+        <h2>خدمات قابل ارائه</h2>
+        <h3>امنیت سایبری</h3>
+        <ul>
+          <li>بررسی و ارزیابی امنیت وب‌اپلیکیشن (Penetration Testing)</li>
+          <li>بررسی و ارزیابی امنیت شبکه</li>
+          <li>شناسایی و رفع آسیب‌پذیری‌ها</li>
+          <li>پیاده‌سازی اصول کدنویسی امن (Secure Coding)</li>
+          <li>توسعه اسکریپت‌های پایتون برای اتوماسیون امنیتی</li>
+          <li>تهیه گزارش و مستندات امنیتی</li>
+          <li>مشاوره امنیت سایبری</li>
+        </ul>
+
+        <hr>
+
+        <h3>طراحی، توسعه و رشد وب</h3>
+        <ul>
+          <li>طراحی و راه‌اندازی سایت با CMS</li>
+          <li>طراحی، سفارشی‌سازی و راه‌اندازی سایت با وردپرس</li>
+          <li>ایمن‌سازی و سخت‌سازی (Hardening) سایت‌های وردپرسی</li>
+          <li>بهینه‌سازی سرعت و عملکرد سایت</li>
+          <li>تدوین و چیدمان استراتژی تبلیغات دیجیتال</li>
+          <li>آنالیز و تهیه گزارش کامل عملکرد سایت</li>
+        </ul>
+      </div>
+
+      <div class="card small-card">
+        <h2>مهارت‌ها</h2>
+        <h3>امنیت سایبری</h3>
+        <ul>
+          <li>امنیت وب‌اپلیکیشن</li>
+          <li>امنیت شبکه</li>
+          <li>تست نفوذ وب و شبکه</li>
+          <li>ارزیابی و شناسایی آسیب‌پذیری</li>
+          <li>استانداردهای OWASP</li>
+          <li>امنیت سرور و رمزنگاری</li>
+          <li>مستندسازی و گزارش‌نویسی امنیتی</li>
+        </ul>
+
+        <hr>
+
+        <h3>برنامه‌نویسی و سیستم</h3>
+        <ul>
+          <li>برنامه‌نویسی پایتون</li>
+          <li>کدنویسی امن (Secure Coding)</li>
+          <li>اسکریپت‌نویسی و اتوماسیون امنیتی</li>
+          <li>سیستم‌عامل لینوکس (LPIC-2)</li>
+        </ul>
+
+        <hr>
+
+        <h3>طراحی و توسعه وب</h3>
+        <ul>
+          <li>طراحی سایت با CMS</li>
+          <li>طراحی و سفارشی‌سازی وردپرس</li>
+        </ul>
+      </div>
+
+      <div class="card small-card">
+        <h2>سوابق شغلی</h2>
+        <h3>مدرس و پشتیبان فنی - آموزشگاه کامپیوتری هوش مصنوعی کیان رضوی</h3>
+        <div class="info">
+          <span>بهمن ۱۴۰۴ - ۵ مرداد ۱۴۰۵</span>
+          <span>نیمه‌وقت</span>
+        </div>
+        <ul>
+          <li>چیدن استراتژی تبلیغاتی و خدمات تبلیغات درون محیطی</li>
+          <li>رفع مشکلات و ایرادهای وب‌سایت</li>
+          <li>پشتیبانی وب‌سایت</li>
+          <li>پشتیبانی کلاس‌های آنلاین</li>
+          <li>تدریس تخصصی طراحی سایت</li>
+          <li>تدریس تخصصی هوش مصنوعی</li>
+        </ul>
+
+        <hr>
+
+        <h3>مشاور امنیتی - شرکت تیوان سپهر</h3>
+        <div class="info">
+          <span>شهریور ۱۴۰۳ - تیر ۱۴۰۴</span>
+          <span>مشهد</span>
+        </div>
+        <ul>
+          <li>توسعه و اجرای دستورالعمل‌های امنیتی و سیاست‌های محافظتی در سازمان</li>
+          <li>راه‌اندازی و مدیریت سیستم‌های تشخیص نفوذ (IDS) و پیشگیری از نفوذ (IPS)</li>
+          <li>تحلیل حملات سایبری و تهدیدات شبکه</li>
+        </ul>
+
+        <hr>
+
+        <h3>تحلیلگر امنیت - شرکت Suma Collection</h3>
+        <div class="info">
+          <span>فروردین ۱۴۰۴ - اردیبهشت ۱۴۰۴</span>
+          <span>دورکاری</span>
+        </div>
+        <ul>
+          <li>تست نفوذ و تحلیل نقاط ضعف سایت</li>
+          <li>برطرف‌سازی آسیب‌پذیری‌های شناسایی‌شده</li>
+          <li>ایجاد هوش مصنوعی اختصاصی در پنل برای تحلیل سایت و دادن پیشنهادهای متمایز</li>
+          <li>نشان دادن مشتریان مشکوک به اسپم و ربات</li>
+          <li>تحلیل و آنالیز امنیت پایه سایت</li>
+        </ul>
+
+        <hr>
+
+        <h3>(Bug Bounty) - آجیل برادران حسینی</h3>
+        <div class="info">
+          <span>خرداد ۱۴۰۴ - شهریور ۱۴۰۴</span>
+          <span>دورکاری</span>
+        </div>
+        <ul>
+          <li>تحلیل کامل سایت و شناسایی ساختار فنی و نقاط ضعف امنیتی</li>
+          <li>کشف و استخراج چندین آسیب‌پذیری امنیتی در بخش‌های مختلف سایت</li>
+          <li>مستندسازی کامل آسیب‌پذیری‌ها و تهیه گزارش فنی برای تیم IT</li>
+          <li>ارائه راهکارهای رفع آسیب‌پذیری‌ها در جلسه تخصصی با تیم فنی</li>
+          <li>تحلیل رفتار ترافیک سایت، مشتریان و سئو</li>
+          <li>تهیه و ارسال گزارش جامع تحلیل ترافیک، مشتریان و سئو برای تیم IT</li>
+        </ul>
+      </div>
+
+      <div class="card small-card">
+        <h2>دوره‌ها و گواهینامه‌ها</h2>
+        <ul>
+          <li>گواهینامه برنامه نویسی پایتون - فنی حرفه‌ای</li>
+          <li>Network Plus - فنی حرفه‌ای</li>
+          <li>Linux Essentials - فنی حرفه‌ای</li>
+          <li>تست نفوذ CEH - فنی حرفه‌ای</li>
+          <li>گواهینامه OWASP - موسسه OWASP Foundation</li>
+        </ul>
+      </div>
+
+      <div class="card small-card">
+        <h2>زبان‌ها</h2>
+        <div class="section">
+          <p><img src="https://flagcdn.com/w40/ir.png" width="20" alt="پرچم ایران"> فارسی</p>
+          <div class="skills-bar"><div class="bar" style="width: 100%"></div></div>
+          <p><img src="https://flagcdn.com/w40/gb.png" width="20" alt="پرچم بریتانیا"> انگلیسی</p>
+          <div class="skills-bar"><div class="bar" style="width: 70%"></div></div>
+        </div>
+      </div>
+
+      <div class="card small-card">
+        <h2>تماس با من</h2>
+        <p>📧jamzedvin@gmail.com</p>
+        <p>📞 09158057416</p>
+        <p>📷 اینستاگرام: @edvinsecuriti</p>
+      </div>
+
+      <div class="card portfolio-card">
+        <h2>نمونه‌کارها</h2>
+        <div class="portfolio-grid">
+
+          <div class="project-item">
+            <div class="project-gallery">
+              <img class="gallery-img active" src="portfolio/project1-1.jpg" alt="نمونه‌کار ۱ - تصویر ۱">
+              <img class="gallery-img" src="portfolio/project1-2.png" alt="نمونه‌کار ۱ - تصویر ۲">
+              <button class="gallery-arrow gallery-prev" onclick="changeSlide(this, -1)">‹</button>
+              <button class="gallery-arrow gallery-next" onclick="changeSlide(this, 1)">›</button>
+              <div class="gallery-dots">
+                <button class="gallery-dot active" onclick="goToSlide(this, 0)"></button>
+                <button class="gallery-dot" onclick="goToSlide(this, 1)"></button>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3>تیوان سپهر</h3>
+              <p class="project-desc">به‌عنوان مشاور امنیتی این مجموعه، دستورالعمل‌ها و سیاست‌های امنیتی سازمان رو تدوین و اجرا کردم، سیستم‌های تشخیص و پیشگیری از نفوذ (IDS/IPS) رو راه‌اندازی و مدیریت کردم و به‌صورت مستمر حملات سایبری و تهدیدات شبکه رو تحلیل می‌کنم.</p>
+              <div class="project-tags">
+                <span>network security</span>
+                <span>Web Security</span>
+              </div>
+              <a class="project-link" href="https://tivansepehr.com/" target="_blank" rel="noopener">مشاهده وب‌سایت ↗</a>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <div class="project-gallery">
+              <img class="gallery-img active" src="portfolio/project2-1.png" alt="نمونه‌کار ۲ - تصویر ۱">
+              <img class="gallery-img" src="portfolio/project2-2.png" alt="نمونه‌کار ۲ - تصویر ۲">
+              <button class="gallery-arrow gallery-prev" onclick="changeSlide(this, -1)">‹</button>
+              <button class="gallery-arrow gallery-next" onclick="changeSlide(this, 1)">›</button>
+              <div class="gallery-dots">
+                <button class="gallery-dot active" onclick="goToSlide(this, 0)"></button>
+                <button class="gallery-dot" onclick="goToSlide(this, 1)"></button>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3>آجیل برادران حسینی</h3>
+              <p class="project-desc">در قالب همکاری Bug Bounty، ساختار فنی سایت رو به‌طور کامل تحلیل و چندین آسیب‌پذیری امنیتی کشف و مستند کردم، راهکارهای رفع اون‌ها رو در جلسه‌ای با تیم فنی ارائه دادم و یک گزارش جامع از ترافیک، رفتار مشتریان و سئوی سایت هم تهیه و تحویل تیم IT دادم.</p>
+              <div class="project-tags">
+                <span>طراحی سایت</span>
+                <span>Python</span>
+              </div>
+              <a class="project-link" href="https://hosseinibrothers.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ↗</a>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <div class="project-gallery">
+              <img class="gallery-img active" src="portfolio/project3-1.png" alt="نمونه‌کار ۳ - تصویر ۱">
+              <img class="gallery-img" src="portfolio/project3-2.png" alt="نمونه‌کار ۳ - تصویر ۲">
+              <button class="gallery-arrow gallery-prev" onclick="changeSlide(this, -1)">‹</button>
+              <button class="gallery-arrow gallery-next" onclick="changeSlide(this, 1)">›</button>
+              <div class="gallery-dots">
+                <button class="gallery-dot active" onclick="goToSlide(this, 0)"></button>
+                <button class="gallery-dot" onclick="goToSlide(this, 1)"></button>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3>هوش مصنوعی کیان رضوی</h3>
+              <p class="project-desc">به‌عنوان مدرس و پشتیبان فنی این آموزشگاه، استراتژی تبلیغاتی و تبلیغات درون محیطی رو چیدم، مشکلات و ایرادهای وب‌سایت رو رفع کردم، از کلاس‌های آنلاین پشتیبانی کردم و دوره‌های تخصصی طراحی سایت و هوش مصنوعی رو تدریس می‌کنم.</p>
+              <div class="project-tags">
+                <span>Network Security</span>
+                <span>Consulting</span>
+              </div>
+              <a class="project-link" href="https://hmco.ir" target="_blank" rel="noopener">مشاهده وب‌سایت ↗</a>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
 
-    <div class="card small-card">
-      <h2>خدمات قابل ارائه</h2>
-      <ul>
-        <li>برسی و ارزیابی امنیت وب اپلیکیشن</li>
-        <li>برسی و ارزیابی امنیت شبکه</li>
-        <li>مشاوره امنیت سایبری</li>
-        <li>شناسایی و رفع اسیب پذیری ها</li>
-        <li>تهیه گزارش و مستندات امنیتی</li>
-        <li>پیاده سازی کدنویسی امن</li>
-        <li>نوسعه اسکریپت‌ های پایتون</li>
-        <li>طراحی سایت + cms</li>
-        <li>ایمن سازی و سخت سازی وردپرس</li>
-      </ul>
-    </div>
+    <!-- ===================== ENGLISH VERSION ===================== -->
+    <div class="container lang-en" id="content-en" dir="ltr">
 
-    <div class="card small-card">
-      <h2>مهارت‌ها</h2>
-      <div class="section">
-        <p> امنیت وب سایت</p>
-        <div class="skills-bar"><div class="bar" style="width: 90%"></div></div>
-        <p> امنیت شبکه </p>
-        <div class="skills-bar"><div class="bar" style="width: 70%"></div></div>
-        <p> تست نفوذ وب و شبکه </p>
-        <div class="skills-bar"><div class="bar" style="width: 73%"></div></div>
-        <p> ارزیابی و شناسایی اسیب پذیری </p>
-        <div class="skills-bar"><div class="bar" style="width: 75%"></div></div>
-        <p> امنیت سرور و رمزنگاری</p>
-        <div class="skills-bar"><div class="bar" style="width: 70%"></div></div>
-        <p> مستندسازی و گزارش‌نویسی امنیتی</p>
-        <div class="skills-bar"><div class="bar" style="width: 85%"></div></div>
-        <p>برنامه نویسی پایتون</p>
-        <div class="skills-bar"><div class="bar" style="width: 70%"></div></div>
-        <p>کدنویسی امن</p>
-        <div class="skills-bar"><div class="bar" style="width: 80%"></div></div>
-        <p> اسکریپت‌ نویسی و اتوماسیون امنیتی</p>
-        <div class="skills-bar"><div class="bar" style="width: 68%"></div></div>
-        <p> سیستم عامل لینوکس</p>
-        <div class="skills-bar"><div class="bar" style="width: 83%"></div></div>
-        <p> طراحی سایت</p>
-        <div class="skills-bar"><div class="bar" style="width: 80%"></div></div>
-
-
+      <div class="card header-card">
+        <img src="picprof.jpg" alt="Amirreza's profile photo" class="profile-image">
+        <div class="header-content">
+          <h1>Amirreza Hassannezhad Fard</h1>
+          <p class="job-title">Cybersecurity Specialist &amp; Developer</p>
+          <p class="about-me-text">
+            I'm a specialist with 3+ years of hands-on experience across two areas of expertise: information security and web design/development. In cybersecurity, my work includes protecting social media accounts, web application penetration testing (bug bounty), and securing organizational networks; along this path I've discovered and reported multiple vulnerabilities on the reputable HackerOne platform, and I specialize in identifying and fixing security weaknesses based on OWASP standards.
+            Alongside this expertise, I have extensive skill in designing and building websites using content management systems (CMS), especially WordPress, and I've designed and launched numerous projects from scratch for various businesses and brands. Combining these two skills — building and securing websites at the same time — makes me a unique fit for projects that need both a professional look and performance, and genuine security against online threats.
+            I've worked as a freelancer with international brands and companies, providing both security consulting and web design services. I hold an LPIC-2 certification and use Bash and Python to automate security processes and penetration testing. Beyond technical services, I've also been active in security consulting for small and medium-sized businesses.
+          </p>
+          <div class="personal-details">
+              <span>Born: Sep 8, 2008</span>
+              <span>Khorasan Razavi, Mashhad, Iran</span>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="card small-card">
-      <h2>سوابق شغلی</h2>
-      <h3>مشاور امنیتی - شرکت تیوان سپهر</h3>
-      <div class="info">
-        <span>شهریور ۱۴۰۳ - اکنون</span>
-        <span>مشهد</span>
-      </div>
-      <ul>
-        <li>توسعه و اجرای دستورالعمل‌های امنیتی و سیاست‌های محافظتی در سازمان</li>
-        <li>راه‌اندازی و مدیریت سیستم‌های تشخیص نفوذ (IDS) و پیشگیری از نفوذ (IPS)</li>
-        <li>تحلیل حملات سایبری و تهدیدات شبکه</li>
+      <div class="card small-card">
+        <h2>Services</h2>
+        <h3>Cybersecurity</h3>
+        <ul>
+          <li>Web application security assessment (penetration testing)</li>
+          <li>Network security assessment</li>
+          <li>Vulnerability identification and remediation</li>
+          <li>Secure coding implementation</li>
+          <li>Python script development for security automation</li>
+          <li>Security reporting and documentation</li>
+          <li>Cybersecurity consulting</li>
+        </ul>
+
         <hr>
-<br>
 
-      </ul>
-
-
-      <h3>تحلیلگر امنیت - شرکت Suma Collection</h3>
-      <div class="info">
-        <span>فروردین ۱۴۰۴ - اردیبهشت ۱۴۰۴</span>
-        <span>دورکاری</span>
+        <h3>Web Design, Development &amp; Growth</h3>
+        <ul>
+          <li>Website design and launch with CMS</li>
+          <li>WordPress design, customization, and setup</li>
+          <li>WordPress hardening and security</li>
+          <li>Website speed and performance optimization</li>
+          <li>Digital advertising strategy planning</li>
+          <li>Full site performance analysis and reporting</li>
+        </ul>
       </div>
-      <ul>
-        <li>تست نفوذ و تحلیل نقاط ضعف سایت</li>
-        <li>برطرف‌سازی آسیب‌پذیری‌های شناسایی‌شده</li>
-        <li class="reveal">ایجاد هوش مصنوعی اختصاصی در پنل برای تحلیل سایت و دادن پیشنهادهای متمایز</li>
-        <li class="reveal">نشان دادن مشتریان مشکوک به اسپم و ربات</li>
-        <li class="reveal">تحلیل و آنالیز امنیت پایه سایت</li>
+
+      <div class="card small-card">
+        <h2>Skills</h2>
+        <h3>Cybersecurity</h3>
+        <ul>
+          <li>Web application security</li>
+          <li>Network security</li>
+          <li>Web &amp; network penetration testing</li>
+          <li>Vulnerability assessment</li>
+          <li>OWASP standards</li>
+          <li>Server security &amp; encryption</li>
+          <li>Security documentation &amp; reporting</li>
+        </ul>
+
         <hr>
-<br>
 
-      <h3>(Bug Bounty) - آجیل برادران حسینی</h3>
-<div class="info">
-  <span>خرداد ۱۴۰۴ - شهریور ۱۴۰۴</span>
-  <span>دورکاری</span>
-</div>
-<ul>
-  <li>تحلیل کامل سایت و شناسایی ساختار فنی و نقاط ضعف امنیتی</li>
-  <li>کشف و استخراج چندین آسیب‌پذیری امنیتی در بخش‌های مختلف سایت</li>
-  <li>مستندسازی کامل آسیب‌پذیری‌ها و تهیه گزارش فنی برای تیم IT</li>
-  <li>ارائه راهکارهای رفع آسیب‌پذیری‌ها در جلسه تخصصی با تیم فنی</li>
-  <li>تحلیل رفتار ترافیک سایت، مشتریان و سئو</li>
-  <li>تهیه و ارسال گزارش جامع تحلیل ترافیک، مشتریان و سئو برای تیم IT</li>
-</ul>
+        <h3>Programming &amp; Systems</h3>
+        <ul>
+          <li>Python programming</li>
+          <li>Secure coding</li>
+          <li>Security scripting &amp; automation</li>
+          <li>Linux operating system (LPIC-2)</li>
+        </ul>
 
+        <hr>
 
+        <h3>Web Design &amp; Development</h3>
+        <ul>
+          <li>Website design with CMS</li>
+          <li>WordPress design &amp; customization</li>
+        </ul>
+      </div>
 
-      </ul>
-    </div>
+      <div class="card small-card">
+        <h2>Work Experience</h2>
+        <h3>Instructor &amp; Technical Support - Kian Razavi AI Computer Institute</h3>
+        <div class="info">
+          <span>Feb 2026 - Jul 27, 2026</span>
+          <span>Part-time</span>
+        </div>
+        <ul>
+          <li>Planned advertising strategy and in-venue advertising services</li>
+          <li>Fixed website issues and bugs</li>
+          <li>Website support</li>
+          <li>Online class support</li>
+          <li>Specialized instruction in website design</li>
+          <li>Specialized instruction in artificial intelligence</li>
+        </ul>
 
-    <div class="card small-card">
-      <h2>دوره‌ها و گواهینامه‌ها</h2>
-      <ul>
-        <li>گواهینامه برنامه نویسی پایتون - فنی حرفه‌ای</li>
-        <li>Network Plus - فنی حرفه‌ای</li>
-        <li>Linux Essentials - فنی حرفه‌ای</li>
-        <li>تست نفوذ CEH - فنی حرفه‌ای</li>
-        <li>گواهینامه OWASP - موسسه OWASP Foundation</li>
-      </ul>
-    </div>
+        <hr>
 
-    <div class="card small-card">
-      <h2>زبان‌ها</h2>
-      <div class="section">
-        <p><img src="https://flagcdn.com/w40/ir.png" width="20" alt="پرچم ایران"> فارسی</p>
-        <div class="skills-bar"><div class="bar" style="width: 100%"></div></div>
-        <p><img src="https://flagcdn.com/w40/gb.png" width="20" alt="پرچم بریتانیا"> انگلیسی</p>
-        <div class="skills-bar"><div class="bar" style="width: 70%"></div></div>
+        <h3>Security Consultant - Tivan Sepehr Co.</h3>
+        <div class="info">
+          <span>Sep 2024 - Jul 2025</span>
+          <span>Mashhad</span>
+        </div>
+        <ul>
+          <li>Developed and enforced security guidelines and protective policies across the organization</li>
+          <li>Set up and managed intrusion detection (IDS) and intrusion prevention (IPS) systems</li>
+          <li>Analyzed cyberattacks and network threats</li>
+        </ul>
+
+        <hr>
+
+        <h3>Security Analyst - Suma Collection</h3>
+        <div class="info">
+          <span>Mar 2025 - May 2025</span>
+          <span>Remote</span>
+        </div>
+        <ul>
+          <li>Penetration testing and analysis of site weaknesses</li>
+          <li>Remediated identified vulnerabilities</li>
+          <li>Built a dedicated AI tool in the admin panel to analyze the site and generate tailored suggestions</li>
+          <li>Flagged customers suspected of spam or bot activity</li>
+          <li>Analyzed the site's baseline security posture</li>
+        </ul>
+
+        <hr>
+
+        <h3>Bug Bounty - Hosseini Brothers Nuts</h3>
+        <div class="info">
+          <span>Jun 2025 - Sep 2025</span>
+          <span>Remote</span>
+        </div>
+        <ul>
+          <li>Full site analysis, mapping the technical structure and security weaknesses</li>
+          <li>Discovered and extracted several security vulnerabilities across different parts of the site</li>
+          <li>Fully documented the vulnerabilities and prepared a technical report for the IT team</li>
+          <li>Presented remediation approaches in a dedicated session with the technical team</li>
+          <li>Analyzed site traffic, customer behavior, and SEO</li>
+          <li>Prepared and delivered a comprehensive traffic, customer, and SEO analysis report for the IT team</li>
+        </ul>
+      </div>
+
+      <div class="card small-card">
+        <h2>Courses &amp; Certificates</h2>
+        <ul>
+          <li>Python Programming Certificate - Fanni Herfei</li>
+          <li>Network+ - Fanni Herfei</li>
+          <li>Linux Essentials - Fanni Herfei</li>
+          <li>CEH Penetration Testing - Fanni Herfei</li>
+          <li>OWASP Certificate - OWASP Foundation</li>
+        </ul>
+      </div>
+
+      <div class="card small-card">
+        <h2>Languages</h2>
+        <div class="section">
+          <p><img src="https://flagcdn.com/w40/ir.png" width="20" alt="Iran flag"> Persian</p>
+          <div class="skills-bar"><div class="bar" style="width: 100%"></div></div>
+          <p><img src="https://flagcdn.com/w40/gb.png" width="20" alt="UK flag"> English</p>
+          <div class="skills-bar"><div class="bar" style="width: 70%"></div></div>
+        </div>
+      </div>
+
+      <div class="card small-card">
+        <h2>Contact Me</h2>
+        <p>📧 jamzedvin@gmail.com</p>
+        <p>📞 +98 915 805 7416</p>
+        <p>📷 Instagram: @edvinsecuriti</p>
+      </div>
+
+      <div class="card portfolio-card">
+        <h2>Portfolio</h2>
+        <div class="portfolio-grid">
+
+          <div class="project-item">
+            <div class="project-gallery">
+              <img class="gallery-img active" src="portfolio/project1-1.jpg" alt="Project 1 - image 1">
+              <img class="gallery-img" src="portfolio/project1-2.png" alt="Project 1 - image 2">
+              <button class="gallery-arrow gallery-prev" onclick="changeSlide(this, -1)">‹</button>
+              <button class="gallery-arrow gallery-next" onclick="changeSlide(this, 1)">›</button>
+              <div class="gallery-dots">
+                <button class="gallery-dot active" onclick="goToSlide(this, 0)"></button>
+                <button class="gallery-dot" onclick="goToSlide(this, 1)"></button>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3>Tivan Sepehr</h3>
+              <p class="project-desc">As the company's security consultant, I developed and enforced its security guidelines and policies, set up and managed intrusion detection/prevention systems (IDS/IPS), and continuously analyze cyberattacks and network threats.</p>
+              <div class="project-tags">
+                <span>Network Security</span>
+                <span>Web Security</span>
+              </div>
+              <a class="project-link" href="https://tivansepehr.com/" target="_blank" rel="noopener">Visit website ↗</a>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <div class="project-gallery">
+              <img class="gallery-img active" src="portfolio/project2-1.png" alt="Project 2 - image 1">
+              <img class="gallery-img" src="portfolio/project2-2.png" alt="Project 2 - image 2">
+              <button class="gallery-arrow gallery-prev" onclick="changeSlide(this, -1)">‹</button>
+              <button class="gallery-arrow gallery-next" onclick="changeSlide(this, 1)">›</button>
+              <div class="gallery-dots">
+                <button class="gallery-dot active" onclick="goToSlide(this, 0)"></button>
+                <button class="gallery-dot" onclick="goToSlide(this, 1)"></button>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3>Hosseini Brothers Nuts</h3>
+              <p class="project-desc">As a bug bounty engagement, I fully analyzed the site's technical structure, discovered and documented several security vulnerabilities, presented remediation approaches to the technical team, and delivered a comprehensive traffic, customer behavior, and SEO report to the IT team.</p>
+              <div class="project-tags">
+                <span>Web Design</span>
+                <span>Python</span>
+              </div>
+              <a class="project-link" href="https://hosseinibrothers.ir" target="_blank" rel="noopener">Visit website ↗</a>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <div class="project-gallery">
+              <img class="gallery-img active" src="portfolio/project3-1.png" alt="Project 3 - image 1">
+              <img class="gallery-img" src="portfolio/project3-2.png" alt="Project 3 - image 2">
+              <button class="gallery-arrow gallery-prev" onclick="changeSlide(this, -1)">‹</button>
+              <button class="gallery-arrow gallery-next" onclick="changeSlide(this, 1)">›</button>
+              <div class="gallery-dots">
+                <button class="gallery-dot active" onclick="goToSlide(this, 0)"></button>
+                <button class="gallery-dot" onclick="goToSlide(this, 1)"></button>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3>Kian Razavi AI Institute</h3>
+              <p class="project-desc">As instructor and technical support for this institute, I planned advertising strategy and in-venue advertising, fixed website issues, supported online classes, and teach specialized courses in website design and artificial intelligence.</p>
+              <div class="project-tags">
+                <span>Network Security</span>
+                <span>Consulting</span>
+              </div>
+              <a class="project-link" href="https://hmco.ir" target="_blank" rel="noopener">Visit website ↗</a>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
 
-    <div class="card small-card">
-      <h2>تماس با من</h2>
-      <p>📧jamzedvin@gmail.com</p>
-      <p>📞 09158057416</p>
-      <p>📷 اینستاگرام: @edvinsecuriti</p>
-    </div>
   </div>
-</body>
 
+  <script>
+    // --- Portfolio mini-gallery controls ---
+    function setSlide(gallery, index) {
+      var imgs = gallery.querySelectorAll('.gallery-img');
+      var dots = gallery.querySelectorAll('.gallery-dot');
+      if (!imgs.length) return;
+      index = ((index % imgs.length) + imgs.length) % imgs.length; // wrap around
+      imgs.forEach(function (img, i) { img.classList.toggle('active', i === index); });
+      dots.forEach(function (dot, i) { dot.classList.toggle('active', i === index); });
+      gallery.dataset.index = index;
+    }
+
+    function changeSlide(btn, direction) {
+      var gallery = btn.closest('.project-gallery');
+      var current = parseInt(gallery.dataset.index || '0', 10);
+      setSlide(gallery, current + direction);
+    }
+
+    function goToSlide(dot, index) {
+      var gallery = dot.closest('.project-gallery');
+      setSlide(gallery, index);
+    }
+
+    function selectLang(lang) {
+      var html = document.getElementById('html-root');
+      var body = document.body;
+      var overlay = document.getElementById('lang-overlay');
+      var content = document.getElementById('site-content');
+      var faBlock = document.getElementById('content-fa');
+      var enBlock = document.getElementById('content-en');
+      var switchBtn = document.getElementById('lang-switch');
+      var switchFlag = document.getElementById('lang-switch-flag');
+      var switchLabel = document.getElementById('lang-switch-label');
+
+      if (lang === 'en') {
+        html.setAttribute('lang', 'en');
+        html.setAttribute('dir', 'ltr');
+        body.classList.add('lang-en');
+        faBlock.setAttribute('data-hide', '');
+        enBlock.removeAttribute('data-hide');
+        // Button now offers to switch back to Persian
+        switchFlag.src = 'https://flagcdn.com/w40/ir.png';
+        switchLabel.textContent = 'فارسی';
+      } else {
+        html.setAttribute('lang', 'fa');
+        html.setAttribute('dir', 'rtl');
+        body.classList.remove('lang-en');
+        enBlock.setAttribute('data-hide', '');
+        faBlock.removeAttribute('data-hide');
+        // Button now offers to switch to English
+        switchFlag.src = 'https://flagcdn.com/w40/gb.png';
+        switchLabel.textContent = 'English';
+      }
+
+      // Remember choice for next visit
+      try { localStorage.setItem('resumeLang', lang); } catch (e) {}
+
+      content.classList.add('visible');
+      overlay.classList.add('hidden');
+      switchBtn.classList.add('visible');
+      setTimeout(function () { overlay.style.display = 'none'; }, 400);
+    }
+
+    // Re-open the language overlay so the user can correct their choice
+    function openLangOverlay() {
+      var overlay = document.getElementById('lang-overlay');
+      overlay.style.display = 'flex';
+      // force reflow so the transition plays
+      void overlay.offsetWidth;
+      overlay.classList.remove('hidden');
+    }
+
+    // If the user already picked a language before, skip the overlay next time
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('resumeLang'); } catch (e) {}
+      if (saved === 'fa' || saved === 'en') {
+        selectLang(saved);
+      }
+    })();
+  </script>
+</body>
 </html>
